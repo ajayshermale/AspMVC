@@ -125,19 +125,18 @@ namespace ConnectDBWEB.Controllers
         {
             try
             {
-                products = MyProduct();
-
-                //products = (from p in products
-                // where p.ProId == id
-                // select p).ToList().ForEach(x => x.ProName = collection["ProName"], x.ProDetail = collection["ProDetail"]);
-                 products.Where(p => p.ProId == id ).ToList().ForEach(p =>
+                Product p = new Product();
+                List<ProductM> product = new List<ProductM>();
+                product = _dbContext.GetProduct(id);
+                //valueList.FirstOrDefault(x => x.Name == nameToFind)?.Value;
+                foreach (var pro in product)
                 {
-                    p.ProName = collection["ProName"];
-                    p.ProDetail = collection["ProDetail"];
-                });
-                
+                    p.ProId = pro.ID; p.ProName = pro.Name; p.ProDetail = pro.Description;
+                }
 
-                return View("Index", products);
+                return View(p);
+
+               // return View("Index", products);
                 //return RedirectToAction(nameof(Index));
             }
             catch
