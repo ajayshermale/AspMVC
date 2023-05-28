@@ -67,5 +67,23 @@ namespace DBcon
                 return inserted;
             }
         }
+
+
+        public int EditProduct(ProductM productsdata) 
+        {
+            using (SqlConnection sql = new SqlConnection(Constring))
+            {
+                sql.Open();
+                SqlCommand cmd = new SqlCommand("Editproduct", sql);                 
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@ID",productsdata.ID);
+                cmd.Parameters.AddWithValue("@Name", productsdata.Name);
+                cmd.Parameters.AddWithValue("@Description", productsdata.Description);
+                int inserted = cmd.ExecuteNonQuery();
+
+                return inserted;
+            }
+
+        }
     }
 }

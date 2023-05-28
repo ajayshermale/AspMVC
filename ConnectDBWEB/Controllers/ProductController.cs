@@ -125,10 +125,34 @@ namespace ConnectDBWEB.Controllers
         {
             try
             {
+                //products.Where(p => p.ProId == id).ToList().ForEach(p =>
+                //{
+                //    p.ProName = collection["ProName"];
+                //    p.ProDetail = collection["ProDetail"];
+                //});
+                ProductM productsEdit = new ProductM()
+                {
+                    ID= Convert.ToInt32(collection["ProId"]),
+                    Name = collection["ProName"],
+                    Description = collection["ProDetail"]
+                };
+                int inserted = _dbContext.EditProduct(productsEdit);
+
+                //return RedirectToAction(nameof(Index));
+                if (inserted > 0)
+                {
+                    return RedirectToAction("Index");
+                }
+                else
+                {
+                   // Labelerror = "Error faced";
+                    return View();
+                }
+
+
                 Product p = new Product();
                 List<ProductM> product = new List<ProductM>();
                 product = _dbContext.GetProduct(id);
-                //valueList.FirstOrDefault(x => x.Name == nameToFind)?.Value;
                 foreach (var pro in product)
                 {
                     p.ProId = pro.ID; p.ProName = pro.Name; p.ProDetail = pro.Description;
